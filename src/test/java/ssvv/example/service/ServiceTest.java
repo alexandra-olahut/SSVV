@@ -92,7 +92,7 @@ class ServiceTest {
 
     @Test
     void addExistingStudentShouldReturnStudent() {
-        Student student = new Student("1", "a", 1, "a");
+        Student student = new Student("11", "a", 1, "a");
         service.addStudent(student);
 
         assertDoesNotThrow(() -> {service.addStudent(student);});
