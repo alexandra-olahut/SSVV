@@ -11,14 +11,14 @@ class StudentValidatorTest {
 
     @Test
     void validStudentShouldBeValidated() {
-        Student student = new Student("1", "Bob the Builder", 912, "bob@gmail.com");
+        Student student = new Student("1", "name", 935, "email");
         assertDoesNotThrow(() -> validator.validate(student));
     }
 
     @Test
-    void invalidStudentShouldThrowException() {
-        Student invalidGradeStudent = new Student("1", "Donald Duck", -34, "dd@email.com");
-        assertThrows(ValidationException.class, () -> validator.validate(invalidGradeStudent));
+    void invalidGroupShouldThrowException() {
+        Student invalidGroupStudent = new Student("1", "name", -1, "email");
+        assertThrows(ValidationException.class, () -> validator.validate(invalidGroupStudent));
     }
 
 }
