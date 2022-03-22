@@ -3,13 +3,13 @@ package ssvv.example.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ssvv.example.domain.Student;
-import ssvv.example.domain.Tema;
-import ssvv.example.repository.NotaXMLRepo;
+import ssvv.example.domain.Assignment;
+import ssvv.example.repository.GradeXMLRepo;
 import ssvv.example.repository.StudentXMLRepo;
-import ssvv.example.repository.TemaXMLRepo;
-import ssvv.example.validation.NotaValidator;
+import ssvv.example.repository.AssignmentXMLRepo;
+import ssvv.example.validation.AssignmentValidator;
+import ssvv.example.validation.GradeValidator;
 import ssvv.example.validation.StudentValidator;
-import ssvv.example.validation.TemaValidator;
 import ssvv.example.validation.ValidationException;
 
 import java.io.FileNotFoundException;
@@ -19,27 +19,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ServiceTest {
 
-    private static String filenameStudent = "fisiere/test/Studenti.xml";
-    private static String filenameTema = "fisiere/test/Teme.xml";
-    private static String filenameNota = "fisiere/test/Note.xml";
+    private static String filenameStudent = "files/test/Students.xml";
+    private static String filenameAssignment = "files/test/Assignments.xml";
+    private static String filenameGrade = "files/test/Grades.xml";
 
     private StudentValidator studentValidator = new StudentValidator();
     private StudentXMLRepo studentXMLRepository = new StudentXMLRepo(filenameStudent);
 
-    private TemaValidator temaValidator = new TemaValidator();
-    private TemaXMLRepo temaXMLRepository = new TemaXMLRepo(filenameTema);
+    private AssignmentValidator assignmentValidator = new AssignmentValidator();
+    private AssignmentXMLRepo assignmentXMLRepository = new AssignmentXMLRepo(filenameAssignment);
 
-    private NotaValidator notaValidator = new NotaValidator(studentXMLRepository, temaXMLRepository);
-    private NotaXMLRepo notaXMLRepository = new NotaXMLRepo(filenameNota);
+    private GradeValidator gradeValidator = new GradeValidator(studentXMLRepository, assignmentXMLRepository);
+    private GradeXMLRepo gradeXMLRepository = new GradeXMLRepo(filenameGrade);
 
-    private Service service = new Service(studentXMLRepository, studentValidator, temaXMLRepository, temaValidator, notaXMLRepository, notaValidator);
+    private Service service = new Service(studentXMLRepository, studentValidator, assignmentXMLRepository, assignmentValidator, gradeXMLRepository, gradeValidator);
 
     @BeforeEach
     void setUp() throws FileNotFoundException {
         PrintWriter writer1 = new PrintWriter(filenameStudent);
         writer1.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
         writer1.close();
-        PrintWriter writer2 = new PrintWriter(filenameTema);
+        PrintWriter writer2 = new PrintWriter(filenameAssignment);
         writer2.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
         writer2.close();
     }
@@ -117,19 +117,19 @@ class ServiceTest {
 
     @Test
     void addValidAssignmentShouldReturnNull() {
-        Tema tema = new Tema("1", "a", 14, 1);
-        Tema ret = service.addTema(tema);
+        Assignment assignment = new Assignment("1", "a", 14, 1);
+        Assignment ret = service.addAssignment(assignment);
         assertNull(ret);
     }
 
     @Test
     void addExistingAssignmentShouldReturnAssignment() {
-        Tema tema = new Tema("1", "a", 14, 1);
-        service.addTema(tema);
+        Assignment assignment = new Assignment("1", "a", 14, 1);
+        service.addAssignment(assignment);
 
-        assertDoesNotThrow(() -> {service.addTema(tema);});
-        Tema ret = service.addTema(tema);
-        assertEquals(ret.getID(), tema.getID());
+        assertDoesNotThrow(() -> {service.addAssignment(assignment);});
+        Assignment ret = service.addAssignment(assignment);
+        assertEquals(ret.getID(), assignment.getID());
     }
 
 }

@@ -63,7 +63,7 @@ public abstract class AbstractXMLRepository<ID, E extends HasID<ID>> extends Abs
      * @return
      */
 
-    public abstract Element createElementfromEntity(Document document, E entity);
+    public abstract Element createElementFromEntity(Document document, E entity);
 
     /**
      * Extrage un obiect dintr-un XML
@@ -101,7 +101,7 @@ public abstract class AbstractXMLRepository<ID, E extends HasID<ID>> extends Abs
             Element root  = document.createElement("inbox");
             document.appendChild(root);
             super.findAll().forEach(e->{
-                Element elem = createElementfromEntity(document,e);
+                Element elem = createElementFromEntity(document,e);
                 root.appendChild(elem);
             });
 

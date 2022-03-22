@@ -8,24 +8,24 @@ import java.io.IOException;
 import java.time.LocalDate;
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class Curent {
+public class Current {
 
     /**
      * @return the current week from the starting of university
      */
     public static int getCurrentWeek(){
-        LocalDate startDate = Curent.getStartDate();
+        LocalDate startDate = Current.getStartDate();
         LocalDate today = LocalDate.now();
         long days = DAYS.between(startDate, today);
-        double diff = Math.ceil((double)days/7);
-        return (int)diff;
+        double week = Math.ceil((double)days/7);
+        return (int)week;
     }
 
     /**
      * @return the date when university have started
      */
     public static LocalDate getStartDate() {
-        String filename = "fisiere/DataInceput.txt";
+        String filename = "files/StartDate.txt";
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
             String line = bufferedReader.readLine();
             String[] words = line.split(",");

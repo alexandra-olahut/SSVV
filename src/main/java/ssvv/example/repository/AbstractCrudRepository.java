@@ -4,14 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implements CrudRepository<ID, E> {
-    private Map<ID, E> elemente;
+    private Map<ID, E> elements;
 
 
     /**
      * Class constructor
      */
     AbstractCrudRepository(){
-        this.elemente = new HashMap<>();
+        this.elements = new HashMap<>();
     }
 
     /**
@@ -22,7 +22,7 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public E findOne(ID id) {
-        return this.elemente.get(id);
+        return this.elements.get(id);
     }
 
     /**
@@ -31,7 +31,7 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public Iterable<E> findAll() {
-        return this.elemente.values();
+        return this.elements.values();
     }
 
     /**
@@ -51,7 +51,7 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
         */
         E el = this.findOne(entity.getID());
         if (el==null){
-            this.elemente.put(entity.getID(), entity);
+            this.elements.put(entity.getID(), entity);
         }
         // must return el (that already exist), not entity that we try to add
         return el;
@@ -65,7 +65,7 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public E delete(ID id) {
-        return this.elemente.remove(id);
+        return this.elements.remove(id);
     }
 
     /**
@@ -76,10 +76,10 @@ public abstract class AbstractCrudRepository <ID, E extends HasID<ID>> implement
      */
     @Override
     public E update(E entity) {
-        if(this.elemente.get(entity.getID()) == null){
+        if(this.elements.get(entity.getID()) == null){
             return null;
         }
-        this.elemente.replace(entity.getID(), entity);
+        this.elements.replace(entity.getID(), entity);
         return entity;
     }
 }

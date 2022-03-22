@@ -4,21 +4,21 @@ import ssvv.example.repository.HasID;
 
 public class Student implements HasID<String> {
     private String idStudent;
-    private String nume;
-    private int grupa;
+    private String name;
+    private int group;
     private String email;
 
     /**
      * Class Constructor
      * @param idStudent - id-ul studentului
-     * @param nume - numele studentului
-     * @param grupa - grupa studentului
+     * @param name - numele studentului
+     * @param group - grupa studentului
      * @param email - emailul unui student
      */
-    public Student(String idStudent, String nume, int grupa, String email) {
+    public Student(String idStudent, String name, int group, String email) {
         this.idStudent = idStudent;
-        this.nume = nume;
-        this.grupa = grupa;
+        this.name = name;
+        this.group = group;
         this.email = email;
     }
 
@@ -40,31 +40,31 @@ public class Student implements HasID<String> {
     /**
      * @return numele studentului
      */
-    public String getNume() {
-        return nume;
+    public String getName() {
+        return name;
     }
 
     /**
      * modifica numele studentului
-     * @param nume - noul nume
+     * @param name - noul nume
      */
-    public void setNume(String nume) {
-        this.nume = nume;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * @return grupa studentului
      */
-    public int getGrupa() {
-        return grupa;
+    public int getGroup() {
+        return group;
     }
 
     /**
      * modifica grupa studentului
-     * @param grupa - noua grupa
+     * @param group - noua grupa
      */
-    public void setGrupa(int grupa) {
-        this.grupa = grupa;
+    public void setGroup(int group) {
+        this.group = group;
     }
 
     /**
@@ -87,6 +87,18 @@ public class Student implements HasID<String> {
      */
     @Override
     public String toString() {
-        return idStudent + "," + nume + "," + grupa + "," + email;
+        return idStudent + "," + name + "," + group + "," + email;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Student))
+            return false;
+        Student other = (Student)obj;
+        return idStudent.equals(other.getID())
+                && idStudent.equals(other.getName())
+                && email.equals(other.getEmail())
+                && group == other.getGroup();
+    }
+
 }

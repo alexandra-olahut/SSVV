@@ -14,12 +14,12 @@ public class StudentFileRepository extends AbstractFileRepository<String, Studen
 
     /**
      * Extrage informatia despre student dintr-un string
-     * @param linie - stringul din care ia datele studentului
+     * @param line - stringul din care ia datele studentului
      * @return studentul
      */
     @Override
-    public Student extractEntity(String linie) {
-        String[] cuvinte = linie.split(",");
-        return new Student(cuvinte[0], cuvinte[1], Integer.parseInt(cuvinte[2]), cuvinte[3]);
+    public Student extractEntity(String line) {
+        String[] words = line.split(",");
+        return new Student(words[0], words[1], Integer.parseInt(words[2]), words[3]);
     }
 }

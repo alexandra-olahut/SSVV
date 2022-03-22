@@ -18,19 +18,19 @@ public abstract class AbstractFileRepository<ID, E extends HasID<ID>> extends Ab
 
     /**
      * Extrage un obiect dintr-un String
-     * @param linie - String-ul din care extrage obiectul
+     * @param line - String-ul din care extrage obiectul
      * @return - obiectul
      */
-    public abstract E extractEntity(String linie);
+    public abstract E extractEntity(String line);
 
     /**
      * Incarca datele din fisier
      */
     public void loadFromFile(){
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
-            String linie;
-            while ((linie = bufferedReader.readLine()) != null) {
-                E entity = extractEntity(linie);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                E entity = extractEntity(line);
                 super.save(entity);
             }
         } catch (IOException exception) {
@@ -55,9 +55,9 @@ public abstract class AbstractFileRepository<ID, E extends HasID<ID>> extends Ab
      * Rescrie fisierul cu toate obiectele din memorie
      */
     public void writeToFile(){
-        try (PrintWriter b = new PrintWriter(this.filename)) {
+        try (PrintWriter writer = new PrintWriter(this.filename)) {
             //Iterable<E> all = super.findAll();
-            super.findAll().forEach(e -> b.println(e.toString()));
+            super.findAll().forEach(e -> writer.println(e.toString()));
         }
             catch (IOException exception) {
             throw new ValidationException(exception.getMessage());

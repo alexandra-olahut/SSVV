@@ -18,14 +18,14 @@ public class StudentValidator implements Validator<Student> {
             throw new ValidationException("Id incorect!");
         }
 
-        if(entity.getNume() == null){
+        if(entity.getName() == null){
             throw new ValidationException("Nume incorect!");
         }
-        if(entity.getNume().equals("")){
+        if(entity.getName().equals("")){
             throw new ValidationException("Nume incorect!");
         }
 
-        if(entity.getGrupa() <= 0) {
+        if(entity.getGroup() <= 0) {
             throw new ValidationException("Grupa incorecta!");
         }
 

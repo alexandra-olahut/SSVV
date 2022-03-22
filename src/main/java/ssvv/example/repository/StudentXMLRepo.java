@@ -23,33 +23,33 @@ public class StudentXMLRepo extends AbstractXMLRepository<String, Student> {
     @Override
     public Student extractEntity(Element element) {
         String studentId = element.getAttribute("idStudent");
-        NodeList nods = element.getChildNodes();
-        String nume =element.getElementsByTagName("nume")
+        NodeList nodes = element.getChildNodes();
+        String name =element.getElementsByTagName("name")
                 .item(0)
                 .getTextContent();
-        String grupa =element.getElementsByTagName("grupa")
+        String group =element.getElementsByTagName("group")
                 .item(0)
                 .getTextContent();
         String email =element.getElementsByTagName("email")
                 .item(0)
                 .getTextContent();
 
-        return new Student(studentId, nume, Integer.parseInt(grupa), email);
+        return new Student(studentId, name, Integer.parseInt(group), email);
     }
 
     @Override
-    public Element createElementfromEntity(Document document, Student entity) {
+    public Element createElementFromEntity(Document document, Student entity) {
         Element e = document.createElement("student");
         e.setAttribute("idStudent", entity.getID());
 
-        Element nume = document.createElement("nume");
-        nume.setTextContent(entity.getNume());
-        e.appendChild(nume);
+        Element name = document.createElement("name");
+        name.setTextContent(entity.getName());
+        e.appendChild(name);
 
-        Element grupa = document.createElement("grupa");
-        Integer g=entity.getGrupa();
-        grupa.setTextContent(g.toString());
-        e.appendChild(grupa);
+        Element group = document.createElement("group");
+        Integer g = entity.getGroup();
+        group.setTextContent(g.toString());
+        e.appendChild(group);
 
         Element email = document.createElement("email");
         email.setTextContent(entity.getEmail());
@@ -57,6 +57,5 @@ public class StudentXMLRepo extends AbstractXMLRepository<String, Student> {
 
         return e;
     }
-
 
 }
