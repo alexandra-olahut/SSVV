@@ -3,6 +3,7 @@ package ssvv.example.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ssvv.example.domain.Student;
+import ssvv.example.domain.Tema;
 import ssvv.example.repository.NotaXMLRepo;
 import ssvv.example.repository.StudentXMLRepo;
 import ssvv.example.repository.TemaXMLRepo;
@@ -35,10 +36,18 @@ class ServiceTest {
 
     @BeforeEach
     void setUp() throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(filenameStudent);
-        writer.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
-        writer.close();
+        PrintWriter writer1 = new PrintWriter(filenameStudent);
+        writer1.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
+        writer1.close();
+        PrintWriter writer2 = new PrintWriter(filenameTema);
+        writer2.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
+        writer2.close();
     }
+
+
+    /**
+     *      ADD STUDENT
+     */
 
     @Test
     void addValidStudentShouldReturnNull() {
@@ -47,13 +56,11 @@ class ServiceTest {
         assertNull(ret);
     }
 
-
     @Test
     void addNullIdStudentShouldThrowException() {
         Student student = new Student(null, "name", 1, "email");
         assertThrows(ValidationException.class, () -> service.addStudent(student));
     }
-
     @Test
     void addEmptyIdStudentShouldThrowException() {
         Student student = new Student("", "name", 1, "email");
@@ -65,7 +72,6 @@ class ServiceTest {
         Student student = new Student("1", null, 1, "email");
         assertThrows(ValidationException.class, () -> service.addStudent(student));
     }
-
     @Test
     void addEmptyNameStudentShouldThrowException() {
         Student student = new Student("1", "", 1, "email");
@@ -77,7 +83,6 @@ class ServiceTest {
         Student student = new Student("1", "name", 1, null);
         assertThrows(ValidationException.class, () -> service.addStudent(student));
     }
-
     @Test
     void addEmptyEmailStudentShouldThrowException() {
         Student student = new Student("1", "name", 1, "");
@@ -87,6 +92,11 @@ class ServiceTest {
     @Test
     void addNegativeGroupStudentShouldThrowException() {
         Student student = new Student("1", "name", -1, "email");
+        assertThrows(ValidationException.class, () -> service.addStudent(student));
+    }
+    @Test
+    void addGroup0StudentShouldThrowException() {
+        Student student = new Student("1", "name", 0, "email");
         assertThrows(ValidationException.class, () -> service.addStudent(student));
     }
 
@@ -100,12 +110,26 @@ class ServiceTest {
         assertEquals(ret, student);
     }
 
+
+    /**
+     *              ADD ASSIGNMENT
+     */
+
     @Test
-    void addGroup0StudentShouldThrowException() {
-        Student student = new Student("1", "name", 0, "email");
-        assertThrows(ValidationException.class, () -> service.addStudent(student));
+    void addValidAssignmentShouldReturnNull() {
+        Tema tema = new Tema("1", "a", 14, 1);
+        Tema ret = service.addTema(tema);
+        assertNull(ret);
     }
 
+    @Test
+    void addExistingAssignmentShouldReturnAssignment() {
+        Tema tema = new Tema("1", "a", 14, 1);
+        service.addTema(tema);
 
+        assertDoesNotThrow(() -> {service.addTema(tema);});
+        Tema ret = service.addTema(tema);
+        assertEquals(ret.getID(), tema.getID());
+    }
 
 }

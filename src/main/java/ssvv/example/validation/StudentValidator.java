@@ -21,7 +21,7 @@ public class StudentValidator implements Validator<Student> {
         if(entity.getNume() == null){
             throw new ValidationException("Nume incorect!");
         }
-        if(entity.getNume() == ""){
+        if(entity.getNume().equals("")){
             throw new ValidationException("Nume incorect!");
         }
 
