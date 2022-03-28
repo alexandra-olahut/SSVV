@@ -116,15 +116,38 @@ class ServiceTest {
      */
 
     @Test
+    void WBT1() {
+        Assignment assignment = new Assignment(null, "desc", 14, 1);
+        assertThrows(ValidationException.class, () -> service.addAssignment(assignment));
+    }
+    @Test
+    void WBT2() {
+        Assignment assignment = new Assignment("1", null, 14, 1);
+        assertThrows(ValidationException.class, () -> service.addAssignment(assignment));
+    }
+    @Test
+    void WBT3() {
+        Assignment assignment = new Assignment("1", "desc", 0, 1);
+        assertThrows(ValidationException.class, () -> service.addAssignment(assignment));
+    }
+    @Test
+    void WBT4() {
+        Assignment assignment = new Assignment("1", "desc", 14, 0);
+        assertThrows(ValidationException.class, () -> service.addAssignment(assignment));
+    }
+
+    //WBT5
+    @Test
     void addValidAssignmentShouldReturnNull() {
-        Assignment assignment = new Assignment("1", "a", 14, 1);
+        Assignment assignment = new Assignment("1", "desc", 14, 1);
         Assignment ret = service.addAssignment(assignment);
         assertNull(ret);
     }
 
+    //WBT6
     @Test
     void addExistingAssignmentShouldReturnAssignment() {
-        Assignment assignment = new Assignment("1", "a", 14, 1);
+        Assignment assignment = new Assignment("1", "desc", 14, 1);
         service.addAssignment(assignment);
 
         assertDoesNotThrow(() -> {service.addAssignment(assignment);});

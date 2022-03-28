@@ -96,7 +96,7 @@ public class Student implements HasID<String> {
             return false;
         Student other = (Student)obj;
         return idStudent.equals(other.getID())
-                && idStudent.equals(other.getName())
+                && name.equals(other.getName())
                 && email.equals(other.getEmail())
                 && group == other.getGroup();
     }
