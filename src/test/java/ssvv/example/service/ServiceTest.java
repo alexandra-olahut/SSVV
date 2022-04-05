@@ -197,8 +197,8 @@ class ServiceTest {
         Assignment assignment = new Assignment("0", "a", 14, 1);
         Grade grade = new Grade("1", "0", "0", 10D, LocalDate.of(2022, 3, 1));
 
-        service.addStudent(student);
-        service.addAssignment(assignment);
+        assertNull(service.addStudent(student));
+        assertNull(service.addAssignment(assignment));
         assertEquals(service.addGrade(grade, "feedback"), 10D);
     }
 
@@ -214,7 +214,7 @@ class ServiceTest {
         Student student = new Student("0", "a", 1, "a");
         Assignment assignment = new Assignment("0", "a", 14, 1);
 
-        service.addStudent(student);
+        assertNull(service.addStudent(student));
         Assignment ret = service.addAssignment(assignment);
         assertNull(ret);
     }
@@ -226,8 +226,8 @@ class ServiceTest {
         Assignment assignment = new Assignment("0", "a", 14, 1);
         Grade grade = new Grade("1", "0", "0", 10D, LocalDate.of(2022, 3, 1));
 
-        service.addStudent(student);
-        service.addAssignment(assignment);
+        assertNull(service.addStudent(student));
+        assertNull(service.addAssignment(assignment));
         assertEquals(service.addGrade(grade, "feedback"), 10D);
     }
 }
