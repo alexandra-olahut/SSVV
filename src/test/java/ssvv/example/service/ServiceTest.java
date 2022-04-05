@@ -2,6 +2,7 @@ package ssvv.example.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ssvv.example.domain.Grade;
 import ssvv.example.domain.Student;
 import ssvv.example.domain.Assignment;
 import ssvv.example.repository.GradeXMLRepo;
@@ -14,6 +15,7 @@ import ssvv.example.validation.ValidationException;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,11 +44,14 @@ class ServiceTest {
         PrintWriter writer2 = new PrintWriter(filenameAssignment);
         writer2.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
         writer2.close();
+        PrintWriter writer3 = new PrintWriter(filenameGrade);
+        writer3.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?><inbox></inbox>");
+        writer3.close();
     }
 
 
     /**
-     *      ADD STUDENT
+     *      L2 : ADD STUDENT
      */
 
     @Test
@@ -112,7 +117,7 @@ class ServiceTest {
 
 
     /**
-     *              ADD ASSIGNMENT
+     *      L3 :  ADD ASSIGNMENT
      */
 
     @Test
@@ -155,4 +160,74 @@ class ServiceTest {
         assertEquals(ret.getID(), assignment.getID());
     }
 
+
+
+    /**
+     *      L4 :  ADD GRADE - integration
+     */
+
+    // BIG BANG
+
+    @Test
+    void addStudentTest() {
+        Student student = new Student("0", "a", 1, "a");
+        Student ret = service.addStudent(student);
+        assertNull(ret);
+    }
+    @Test
+    void addAssignmentTest() {
+        Assignment assignment = new Assignment("0", "a", 14, 1);
+        Assignment ret = service.addAssignment(assignment);
+        assertNull(ret);
+    }
+    @Test
+    void addGradeTest() {
+        studentXMLRepository.save(new Student("0", "a", 1, "a"));
+        assignmentXMLRepository.save(new Assignment("0", "a", 14, 1));
+        
+        Grade grade = new Grade("1", "0", "0", 10D, LocalDate.of(2022, 3, 1));
+        Double ret = service.addGrade(grade, "feedback");
+        assertEquals(ret, 10D);
+    }
+
+    //addStudent + addAssignment + addGrade
+    @Test
+    void addAllIntegrationTest() {
+        Student student = new Student("0", "a", 1, "a");
+        Assignment assignment = new Assignment("0", "a", 14, 1);
+        Grade grade = new Grade("1", "0", "0", 10D, LocalDate.of(2022, 3, 1));
+
+        service.addStudent(student);
+        service.addAssignment(assignment);
+        assertEquals(service.addGrade(grade, "feedback"), 10D);
+    }
+
+
+
+    // INCREMENTAL TOP-DOWN
+
+    // addStudent: addStudentTest from before
+
+    // addStudent + addAssignment
+    @Test
+    void addAssignmentIntegrationTest() {
+        Student student = new Student("0", "a", 1, "a");
+        Assignment assignment = new Assignment("0", "a", 14, 1);
+
+        service.addStudent(student);
+        Assignment ret = service.addAssignment(assignment);
+        assertNull(ret);
+    }
+
+    //addStudent + addAssignment + addGrade
+    @Test
+    void addGradeIntegrationTest() {
+        Student student = new Student("0", "a", 1, "a");
+        Assignment assignment = new Assignment("0", "a", 14, 1);
+        Grade grade = new Grade("1", "0", "0", 10D, LocalDate.of(2022, 3, 1));
+
+        service.addStudent(student);
+        service.addAssignment(assignment);
+        assertEquals(service.addGrade(grade, "feedback"), 10D);
+    }
 }
