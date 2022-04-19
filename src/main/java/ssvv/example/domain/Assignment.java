@@ -79,11 +79,11 @@ public class Assignment implements HasID<String> {
 
     /**
      * schimba numarul unei teme
-     * @param nrTema - noul numar al temei
+     * @param nrAssignment - noul numar al temei
      */
     @Override
-    public void setID(String nrTema) {
-        this.nrAssignment = nrTema;
+    public void setID(String nrAssignment) {
+        this.nrAssignment = nrAssignment;
     }
 
     /**

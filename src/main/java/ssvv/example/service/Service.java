@@ -115,14 +115,14 @@ public class Service {
 
     /**
      * Sterge o tema
-     * @param nrTema - nr-ul temei
+     * @param nrAssignment - nr-ul temei
      * @return tema daca aceasta a fost stearsa sau null daca tema nu exista
      */
-    public Assignment deleteAssignment(String nrTema){
-        if(nrTema == null || nrTema.equals("")) {
+    public Assignment deleteAssignment(String nrAssignment){
+        if(nrAssignment == null || nrAssignment.equals("")) {
             throw new ValidationException("Id-ul nu poate fi null!");
         }
-        return assignmentRepository.delete(nrTema);
+        return assignmentRepository.delete(nrAssignment);
     }
 
     /**
@@ -177,9 +177,9 @@ public class Service {
 
         String filename = "files/students/" + student.getName() + ".txt";
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filename, true))){
-            bufferedWriter.write("\nAssignment: " + assignment.getID());
+            bufferedWriter.write("\nTheme: " + assignment.getID());
             bufferedWriter.write("\nGrade: " + grade.getGrade());
-            bufferedWriter.write("\nSubmitted in week: " + submittedWeek);
+            bufferedWriter.write("\nDelivered in week: " + submittedWeek);
             bufferedWriter.write("\nDeadline: " + assignment.getDeadline());
             bufferedWriter.write("\nFeedback: " +feedback);
             bufferedWriter.newLine();
@@ -222,12 +222,12 @@ public class Service {
 
     /**
      * Prelungeste deadline-ul unei teme
-     * @param nrTema - nr-ul temei
+     * @param nrAssignment - nr-ul temei
      * @param deadline - noul deadline
      */
-    public void extendDeadline(String nrTema, int deadline){
+    public void extendDeadline(String nrAssignment, int deadline){
         int currentWeek= Current.getCurrentWeek();
-        Assignment assignment = assignmentRepository.findOne(nrTema);
+        Assignment assignment = assignmentRepository.findOne(nrAssignment);
         if(assignment == null){
             throw new ValidationException("Assignment inexistenta!");
         }
