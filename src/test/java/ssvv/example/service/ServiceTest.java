@@ -211,6 +211,8 @@ class ServiceTest {
     // addStudent + addAssignment
     @Test
     void addAssignmentIntegrationTest() {
+        studentXMLRepository.delete("0");
+        assignmentXMLRepository.delete("0");
         Student student = new Student("0", "a", 1, "a");
         Assignment assignment = new Assignment("0", "a", 14, 1);
 
